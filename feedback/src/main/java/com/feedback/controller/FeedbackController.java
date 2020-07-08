@@ -27,9 +27,15 @@ public class FeedbackController {
 	private MultiValueMap<String, String> map;
 
 	@PostMapping("/feedback")
-	public Feedback createFeedback(@RequestBody Feedback Feedback) {
+	public ResponseEntity<Feedback> createFeedback(@RequestBody Feedback Feedback) {
 
-		return service.createFeedback(Feedback);
+		try {
+			return new ResponseEntity<Feedback>(service.createFeedback(Feedback), HttpStatus.OK);
+		} catch (BusinessException e) {
+			map = new LinkedMultiValueMap<>();
+			map.add("message", e.getMessage());
+			return new ResponseEntity<Feedback>(null, map, HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@GetMapping("/feedback/{id}")
@@ -46,9 +52,14 @@ public class FeedbackController {
 	}
 
 	@PutMapping("/feedback")
-	public Feedback updateFeedback(@RequestBody Feedback Feedback) {
-
-		return service.updateFeedback(Feedback);
+	public ResponseEntity<Feedback> updateFeedback(@RequestBody Feedback Feedback) {
+		try {
+			return new ResponseEntity<Feedback>(service.updateFeedback(Feedback), HttpStatus.OK);
+		} catch (BusinessException e) {
+			map = new LinkedMultiValueMap<>();
+			map.add("message", e.getMessage());
+			return new ResponseEntity<Feedback>(null, map, HttpStatus.NOT_FOUND);
+		}
 	}
 
 	@DeleteMapping("/feedback/{id}")

@@ -7,11 +7,11 @@ import com.feedback.model.Feedback;
 
 public interface FeedbackService {
 
-	public Feedback createFeedback(Feedback Feedback);
+	public Feedback createFeedback(Feedback Feedback) throws BusinessException;
 
 	public Feedback getFeedbackById(int id) throws BusinessException;
 
-	public Feedback updateFeedback(Feedback Feedback);
+	public Feedback updateFeedback(Feedback Feedback) throws BusinessException;
 
 	public void deleteFeedback(int id) throws BusinessException;
 
